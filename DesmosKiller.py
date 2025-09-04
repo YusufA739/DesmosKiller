@@ -1,4 +1,4 @@
-from YusufCollection import *
+from main import *
 import math
 from math import *
 #how to use:
