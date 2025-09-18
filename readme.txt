@@ -1,0 +1,1 @@
+Simple Matplotlib wrapper to speed up graphing locally or runtime generated data.
