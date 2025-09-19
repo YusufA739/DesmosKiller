@@ -45,6 +45,7 @@ for arrLen in range(0,domainMax+1,1):
     iVals.append(iavg)
 
 
-main.generate_array_then_graph(None,kVals)
+main.graph(None,kVals,None,None,None,True,True, True) #only need to show axes for one of them
+# They share the same graph
 main.graph(None,iVals)
 main.show()
