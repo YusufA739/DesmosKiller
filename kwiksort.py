@@ -1,5 +1,4 @@
 import random,time
-
 from DesmosKiller import main
 
 ktime = 0
