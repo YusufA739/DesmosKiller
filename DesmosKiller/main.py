@@ -3,10 +3,11 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-def graph(xlist=None, ylist=None, color=None, shw=None, showAxes=None, showXaxis=None, showYaxis=None, fitToscreen=None): #this doesn't need a parametric version as it supports custom x and y values
+def graph(xlist=None, ylist=None, color=None, shw=None, showAxes=None, showXaxis=None, showYaxis=None, fitToscreen=None, givenYMIN=None, givenYMAX=None): #this doesn't need a parametric version as it supports custom x and y values
     #(it does not generate values, so yeah. Pretty self-explanatory)
+    #givenYMIN and givenYMAX are there so you can calculate the max and min y-axis values beforehand so it doesn't get overwritten
 
-    #padding
+    #padding out lists and list data checks
     if (xlist is None) and (ylist is None):
         print("Both lists (x list and y list) are None")
     if (xlist is None):
@@ -29,22 +30,38 @@ def graph(xlist=None, ylist=None, color=None, shw=None, showAxes=None, showXaxis
                 ylist.append(20)
     #end of padding (now we can calc the mins and maxes and save(cache is the wrong word) the values in a variable (so in RAM))
 
+    #get mins and maxes for x and y axes
     min_x, max_x, min_y, max_y = min(xlist), max(xlist), min(ylist), max(ylist)
+    #update lims
+    if givenYMIN is not None:
+        if givenYMIN < min_y:
+            min_y = givenYMIN
+    if givenYMAX is not None:
+        if givenYMAX > max_y:
+            max_y = givenYMAX
 
+    #axes showing
     if showXaxis or showAxes:
         x_axis(min_x, max_x)
     if showYaxis or showAxes:
         y_axis(min_y, max_y)
 
+    #fit to screen (limits)
     if not fitToscreen: #rediscovered these lines actually do something (this affects the view of the graph, so how zoomed in or out it is)
         #if no lims are set, the graph will be at max zoom, while still keeping all points within view port. Very useful rediscovery
-        if min(ylist) != max(ylist):
-            plt.ylim(min(ylist), max(ylist))
-        if min(xlist) != max(xlist):
-            plt.xlim(min(xlist), max(xlist))
+        if min_y != max_y:
+            yrange(min_y, max_y)
+            # yrangeauto(ylist) #automatically finds smallest and largest vals instead of manual passing
+            #(already done min and max in here anyway so it's not needed imo, but there anyway)
+        if min_x != max_x:
+            xrange(min_x, max_x)
+            # xrangeauto(xlist)
 
+    #convert to numpy array
     xcoords = np.array(xlist)
     ycoords = np.array(ylist)
+
+    #check valid color for plot
     if color is None:
         plt.plot(xcoords, ycoords, "red")
     else:
@@ -61,10 +78,14 @@ def show():
     plt.show()
 
 # lims not needed; check in generate_array_then_graph for the lims. Lims are not needed because they're useless. Just generate values outside the range its calm
-def yrange(ylist):
+def yrangeauto(ylist):
    plt.ylim(min(ylist), max(ylist))
-def xrange(xlist):
+def xrangeauto(xlist):
    plt.xlim(min(xlist), max(xlist))
+def xrange(xmin, xmax):
+   plt.xlim(xmin, xmax)
+def yrange(ymin, ymax):
+   plt.ylim(ymin, ymax)
 
 def generate_array_then_graph(minimum_x=None, maximum_x=None, f=None, incrementsperunit=None, color=None, shw=None, showAxes=None, showXaxis=None, showYaxis=None, fitToscreen=None):  # reciprocal step can also be thought of as gradings between 0 and 1. So the gradings is 100 per unit if this is 100
     max_y = -9999999999999999999999999999999999999999999999999999999999  # arbitrary small number, so that the first y value is always larger than this
@@ -125,8 +146,9 @@ def generate_array_then_graph(minimum_x=None, maximum_x=None, f=None, increments
     # xrange(coords_x)
 
     # then finally graph f(x) using values we generated, and send to graph() which only does plotting. Delegation to reduce repetitive lines
-    graph(coords_x, coords_y, color, shw, showAxes, showXaxis, showYaxis, fitToscreen) #showAxes, showXaxis, showYaxis and fitToscreen are delegated to graph
+    graph(coords_x, coords_y, color, shw, showAxes, showXaxis, showYaxis, fitToscreen, min_y, max_y) #showAxes, showXaxis, showYaxis and fitToscreen are delegated to graph
     #this way the code has less repetition (the calc would have to pass thru graph anyway so make grpah do checks etc. for axes and fit)
+    #no need to pass: ymin and ymax, they will be recalced anyway for accuracy and consistency in value (reliability)
 
 #does not need to be called manually, so it is not provided in package
 def x_axis(minimum_x, maximum_x):  # needed for x-axis, do not change
@@ -134,7 +156,7 @@ def x_axis(minimum_x, maximum_x):  # needed for x-axis, do not change
 
 #does not need to be called manually, so it is not provided in package
 def y_axis(minimum_y, maximum_y):  # needed for y-axis, do not change
-    graph([0, 0], [minimum_y, maximum_y], "black", False)  # do not change this, either. Gives x=0 to draw the y axis
+    graph([100, 100], [minimum_y, maximum_y], "black", False)  # do not change this, either. Gives x=0 to draw the y axis
 
 
 def generate_array_then_parametric_graph():
