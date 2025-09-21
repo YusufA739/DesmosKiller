@@ -25,7 +25,7 @@ def ins(eray):
         eray[smallestIndex] = eray[currentIndex]
         eray[currentIndex] = temp
 
-repeats = 1
+repeats = 100
 domainMax = 1000
 for arrLen in range(0,domainMax+1,1):
     for carrier in range(repeats):
@@ -46,7 +46,8 @@ for arrLen in range(0,domainMax+1,1):
 
 
 
-main.graph(None,kVals,None,None,False,None,None, True) #only need to show axes for one of them
+main.graph(None,kVals,"blue",None,False,None,None, True, None,None,None,None,None,None,None,None,"Quicksort", None) #only need to show axes for one of them
 # They share the same graph
-main.graph(None,iVals,None,None,True,None,None,None,None,None)
+main.graph(None,iVals,None,None,True,None,None,None,None,None,None,None,"time(μs)","List Size(n)", "Time Complexity of Quicksort vs Insertion Sort",None,"Insertion Sort", True)
+
 main.show()

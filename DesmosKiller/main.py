@@ -4,13 +4,17 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-def graph(xlist=None, ylist=None, color=None, shw=None, showAxes=None, showXaxis=None, showYaxis=None, fitToscreen=None, givenYMIN=None, givenYMAX=None, givenXMIN=None, givenXMAX=None): #this doesn't need a parametric version as it supports custom x and y values
+def graph(xlist=None, ylist=None, color=None, shw=None, showAxes=None, showXaxis=None, showYaxis=None, fitToscreen=None, givenYMIN=None, givenYMAX=None, givenXMIN=None, givenXMAX=None, ylabel=None, xlabel=None, titlelabel=None, superTitlelabel=None, fxlabel=None, showLegend=None, ignoreAxesLabelling=None): #this doesn't need a parametric version as it supports custom x and y values
     #(it does not generate values, so yeah. Pretty self-explanatory)
     #givenYMIN and givenYMAX are there so you can calculate the max and min y-axis values beforehand so it doesn't get overwritten
 
     #padding out lists and list data checks
     if (xlist is None) and (ylist is None):
         print("Both lists (x list and y list) are None")
+        xlist, ylist = [], []
+        for carrier in range(100):
+            xlist.append(carrier)
+            ylist.append(carrier)
     if (xlist is None):
         xlist = []
         print("x list is None")
@@ -70,18 +74,51 @@ def graph(xlist=None, ylist=None, color=None, shw=None, showAxes=None, showXaxis
     xcoords = np.array(xlist)
     ycoords = np.array(ylist)
 
-    #check valid color for plot
+
+    #needed in plotData(), and plotData() can be called before the other labelling checks, as they don't have any impact on plotData() (plt.plot() in reality)
     if color is None:
-        plt.plot(xcoords, ycoords, "red")
-    else:
-        plt.plot(xcoords, ycoords, color=color)
+        color = "red"
+    if fxlabel is None:
+        if ignoreAxesLabelling:
+            pass
+        else:
+            fxlabel = "f(x)"
+
+
+    plotData(xcoords, ycoords, color, fxlabel)#call formatLegend() in here?
+    if showLegend:
+        formatLegend()
+
+    if ylabel is not None:
+        labelYaxis(ylabel)
+    if xlabel is not None:
+        labelXaxis(xlabel)
+    if titlelabel is not None:
+        labelTitle(titlelabel)
+    if superTitlelabel is not None:
+        superTitle(superTitlelabel)
 
     #last line, should be anyway afaik maybe, maybe not. But I think you can't edit a plot after showing, or it's bad practice imo anyway
     if shw:
         show()
 
-def plot():
-    return("Yeah, this ain't happening chief. Use the built-in one using import matplotlib.pyplot as plt")
+def plotData(xcoords, ycoords, color, fxlabel):
+    plt.plot(xcoords, ycoords, color=color, label=fxlabel)
+
+def labelXaxis(string):
+    plt.xlabel(string)
+
+def labelYaxis(string):
+    plt.ylabel(string)
+
+def labelTitle(string):
+    plt.title(string)
+
+def superTitle(string):
+    plt.suptitle(string)
+
+def formatLegend():
+    plt.legend()
 
 def show():
     plt.show()
@@ -96,7 +133,7 @@ def xrange(xmin, xmax):
 def yrange(ymin, ymax):
    plt.ylim(ymin, ymax)
 
-def generate_array_then_graph(minimum_x=None, maximum_x=None, f=None, incrementsperunit=None, color=None, shw=None, showAxes=None, showXaxis=None, showYaxis=None, fitToscreen=None, givenYMIN=None, givenYMAX=None, givenXMIN=None, givenXMAX=None):  # reciprocal step can also be thought of as gradings between 0 and 1. So the gradings is 100 per unit if this is 100
+def generate_array_then_graph(minimum_x=None, maximum_x=None, f=None, incrementsperunit=None, color=None, shw=None, showAxes=None, showXaxis=None, showYaxis=None, fitToscreen=None, givenYMIN=None, givenYMAX=None, givenXMIN=None, givenXMAX=None, ylabel=None, xlabel=None, title=None, supTitle=None, fxlabel=None, showLegend=None, ignoreAxesLabelling=None):  # reciprocal step can also be thought of as gradings between 0 and 1. So the gradings is 100 per unit if this is 100
     max_y = -9999999999999999999999999999999999999999999999999999999999  # arbitrary small number, so that the first y value is always larger than this
     min_y = 9999999999999999999999999999999999999999999999999999999999  # arbitrary large number, so that the first y value is always smaller than this
     if str(type(minimum_x)) == "<class 'float'>":
@@ -172,17 +209,17 @@ def generate_array_then_graph(minimum_x=None, maximum_x=None, f=None, increments
 
 
     # then finally graph f(x) using values we generated, and send to graph() which only does plotting. Delegation to reduce repetitive lines
-    graph(coords_x, coords_y, color, shw, showAxes, showXaxis, showYaxis, fitToscreen, min_y, max_y, min_x, max_x) #showAxes, showXaxis, showYaxis and fitToscreen are delegated to graph
+    graph(coords_x, coords_y, color, shw, showAxes, showXaxis, showYaxis, fitToscreen, min_y, max_y, min_x, max_x, xlabel, ylabel, title, supTitle, fxlabel, showLegend, ignoreAxesLabelling) #showAxes, showXaxis, showYaxis and fitToscreen are delegated to graph
     #this way the code has less repetition (the calc would have to pass thru graph anyway so make graph do checks etc. for axes and fit)
     #no need to pass: ymin and ymax, they will be recalced anyway for accuracy and consistency in value (reliability)
 
 #does not need to be called manually, so it is not provided in package
 def x_axis(minimum_x, maximum_x):  # needed for x-axis, do not change
-    graph([minimum_x, maximum_x], [0, 0], "black", False)  # do not change this, either. Gives y=0 to draw the x axis
+    graph([minimum_x, maximum_x], [0, 0], "black", False, ignoreAxesLabelling=True)  # do not change this, either. Gives y=0 to draw the x axis
 
 #does not need to be called manually, so it is not provided in package
 def y_axis(minimum_y, maximum_y):  # needed for y-axis, do not change
-    graph([0, 0], [minimum_y, maximum_y], "black", False)  # do not change this, either. Gives x=0 to draw the y axis
+    graph([0, 0], [minimum_y, maximum_y], "black", False, ignoreAxesLabelling=True)  # do not change this, either. Gives x=0 to draw the y axis
 
 def generate_array_then_parametric_graph():
     print("Behind the scenes... NOT FINISHED CRTL+C THIS RN")
