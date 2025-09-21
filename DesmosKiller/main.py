@@ -1,9 +1,10 @@
 # next lib
+#Note: if overrides are smaller than the min or max within the list, they will be ignored. They only work for making the graph larger, so min override must be smaller than the min in list and same for max
 import matplotlib.pyplot as plt
 import numpy as np
 
 
-def graph(xlist=None, ylist=None, color=None, shw=None, showAxes=None, showXaxis=None, showYaxis=None, fitToscreen=None, givenYMIN=None, givenYMAX=None): #this doesn't need a parametric version as it supports custom x and y values
+def graph(xlist=None, ylist=None, color=None, shw=None, showAxes=None, showXaxis=None, showYaxis=None, fitToscreen=None, givenYMIN=None, givenYMAX=None, givenXMIN=None, givenXMAX=None): #this doesn't need a parametric version as it supports custom x and y values
     #(it does not generate values, so yeah. Pretty self-explanatory)
     #givenYMIN and givenYMAX are there so you can calculate the max and min y-axis values beforehand so it doesn't get overwritten
 
@@ -32,13 +33,21 @@ def graph(xlist=None, ylist=None, color=None, shw=None, showAxes=None, showXaxis
 
     #get mins and maxes for x and y axes
     min_x, max_x, min_y, max_y = min(xlist), max(xlist), min(ylist), max(ylist)
-    #update lims
+
+    #update lims (we don't know if graph is called or if generate was called, generate has checks for lims in itself. But if it is called by graph() then we have to check, so check either way as )
     if givenYMIN is not None:
         if givenYMIN < min_y:
             min_y = givenYMIN
     if givenYMAX is not None:
         if givenYMAX > max_y:
             max_y = givenYMAX
+
+    if givenXMIN is not None:
+        if givenXMIN < min_x:
+            min_x = givenXMIN
+    if givenXMAX is not None:
+        if givenXMAX > max_x:
+            max_x = givenXMAX
 
     #axes showing
     if showXaxis or showAxes:
@@ -51,11 +60,11 @@ def graph(xlist=None, ylist=None, color=None, shw=None, showAxes=None, showXaxis
         #if no lims are set, the graph will be at max zoom, while still keeping all points within view port. Very useful rediscovery
         if min_y != max_y:
             yrange(min_y, max_y)
-            # yrangeauto(ylist) #automatically finds smallest and largest vals instead of manual passing
+            # yrangeauto(ylist) #automatically finds smallest and largest vals instead of manual passing, but does not allow overriding using givenYMAX and givenYMIN
             #(already done min and max in here anyway so it's not needed imo, but there anyway)
         if min_x != max_x:
             xrange(min_x, max_x)
-            # xrangeauto(xlist)
+            # xrangeauto(xlist) #no override is given for this. Only givenYMIN and givenYMAX for overriding. Will not add it in. Overriding needs to
 
     #convert to numpy array
     xcoords = np.array(xlist)
@@ -87,7 +96,7 @@ def xrange(xmin, xmax):
 def yrange(ymin, ymax):
    plt.ylim(ymin, ymax)
 
-def generate_array_then_graph(minimum_x=None, maximum_x=None, f=None, incrementsperunit=None, color=None, shw=None, showAxes=None, showXaxis=None, showYaxis=None, fitToscreen=None):  # reciprocal step can also be thought of as gradings between 0 and 1. So the gradings is 100 per unit if this is 100
+def generate_array_then_graph(minimum_x=None, maximum_x=None, f=None, incrementsperunit=None, color=None, shw=None, showAxes=None, showXaxis=None, showYaxis=None, fitToscreen=None, givenYMIN=None, givenYMAX=None, givenXMIN=None, givenXMAX=None):  # reciprocal step can also be thought of as gradings between 0 and 1. So the gradings is 100 per unit if this is 100
     max_y = -9999999999999999999999999999999999999999999999999999999999  # arbitrary small number, so that the first y value is always larger than this
     min_y = 9999999999999999999999999999999999999999999999999999999999  # arbitrary large number, so that the first y value is always smaller than this
     if str(type(minimum_x)) == "<class 'float'>":
@@ -145,9 +154,26 @@ def generate_array_then_graph(minimum_x=None, maximum_x=None, f=None, increments
     # yrange(coords_y)
     # xrange(coords_x)
 
+    #override limits added here as well
+    if givenYMIN is not None:
+        if givenYMIN < min_y:
+            min_y = givenYMIN
+    if givenYMAX is not None:
+        if givenYMAX > max_y:
+            max_y = givenYMAX
+
+    #the minimum x and y as the first two parameters are for the graph generation/for y values. These two are for drawing the x axis
+    if givenXMIN is not None:
+        if givenXMIN < min_x:
+            min_x = givenXMIN
+    if givenXMAX is not None:
+        if givenXMAX > max_x:
+            max_x = givenXMAX
+
+
     # then finally graph f(x) using values we generated, and send to graph() which only does plotting. Delegation to reduce repetitive lines
-    graph(coords_x, coords_y, color, shw, showAxes, showXaxis, showYaxis, fitToscreen, min_y, max_y) #showAxes, showXaxis, showYaxis and fitToscreen are delegated to graph
-    #this way the code has less repetition (the calc would have to pass thru graph anyway so make grpah do checks etc. for axes and fit)
+    graph(coords_x, coords_y, color, shw, showAxes, showXaxis, showYaxis, fitToscreen, min_y, max_y, min_x, max_x) #showAxes, showXaxis, showYaxis and fitToscreen are delegated to graph
+    #this way the code has less repetition (the calc would have to pass thru graph anyway so make graph do checks etc. for axes and fit)
     #no need to pass: ymin and ymax, they will be recalced anyway for accuracy and consistency in value (reliability)
 
 #does not need to be called manually, so it is not provided in package
