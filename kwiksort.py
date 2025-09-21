@@ -45,7 +45,8 @@ for arrLen in range(0,domainMax+1,1):
     iVals.append(iavg)
 
 
-main.graph(None,kVals,None,None,None,True,True, True) #only need to show axes for one of them
+
+main.graph(None,kVals,None,None,False,None,None, True) #only need to show axes for one of them
 # They share the same graph
-main.graph(None,iVals)
+main.graph(None,iVals,None,None,True,None,None,None,None,None)
 main.show()

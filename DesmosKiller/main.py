@@ -156,15 +156,12 @@ def x_axis(minimum_x, maximum_x):  # needed for x-axis, do not change
 
 #does not need to be called manually, so it is not provided in package
 def y_axis(minimum_y, maximum_y):  # needed for y-axis, do not change
-    graph([100, 100], [minimum_y, maximum_y], "black", False)  # do not change this, either. Gives x=0 to draw the y axis
-
+    graph([0, 0], [minimum_y, maximum_y], "black", False)  # do not change this, either. Gives x=0 to draw the y axis
 
 def generate_array_then_parametric_graph():
     print("Behind the scenes... NOT FINISHED CRTL+C THIS RN")
     #copy code for generate, then just add z axis, and logically rotate by 90 clockwise, y going up, x going into and out, positive is out, and z is now x
     #basically, we just put z instead of x in plot
 
-
 def test():
     print("program is present and is running--END OF TEST")
-

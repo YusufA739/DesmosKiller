@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(name="DesmosKiller",
-      version="4.0",
+      version="5.0",
       packages=["DesmosKiller"],
       author="YusufA442",
       author_email="yusuf365820@gmail.com",
