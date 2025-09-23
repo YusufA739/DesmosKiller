@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-def graph(xlist=None, ylist=None, color=None, shw=None, showAxes=None, showXaxis=None, showYaxis=None, fitToscreen=None, givenYMIN=None, givenYMAX=None, givenXMIN=None, givenXMAX=None, ylabel=None, xlabel=None, titlelabel=None, superTitlelabel=None, fxlabel=None, showLegend=None, ignoreAxesLabelling=None): #this doesn't need a parametric version as it supports custom x and y values
+def graph(xlist=None, ylist=None, color=None, shw=None, showAxes=None, showXaxis=None, showYaxis=None, fitToscreen=None, givenXMIN=None, givenXMAX=None, givenYMIN=None, givenYMAX=None, xlabel=None, ylabel=None, titlelabel=None, superTitlelabel=None, functionLabel=None, showLegend=None, ignoreAxesLabelling=None): #this doesn't need a parametric version as it supports custom x and y values
     #(it does not generate values, so yeah. Pretty self-explanatory)
     #givenYMIN and givenYMAX are there so you can calculate the max and min y-axis values beforehand so it doesn't get overwritten
 
@@ -78,14 +78,14 @@ def graph(xlist=None, ylist=None, color=None, shw=None, showAxes=None, showXaxis
     #needed in plotData(), and plotData() can be called before the other labelling checks, as they don't have any impact on plotData() (plt.plot() in reality)
     if color is None:
         color = "red"
-    if fxlabel is None:
+    if functionLabel is None:
         if ignoreAxesLabelling:
             pass
         else:
-            fxlabel = "f(x)"
+            functionLabel = "f(x)"
 
 
-    plotData(xcoords, ycoords, color, fxlabel)#call formatLegend() in here?
+    plotData(xcoords, ycoords, color, functionLabel)#call formatLegend() in here?
     if showLegend:
         formatLegend()
 
@@ -102,8 +102,8 @@ def graph(xlist=None, ylist=None, color=None, shw=None, showAxes=None, showXaxis
     if shw:
         show()
 
-def plotData(xcoords, ycoords, color, fxlabel):
-    plt.plot(xcoords, ycoords, color=color, label=fxlabel)
+def plotData(xcoords, ycoords, color, functionLabel):
+    plt.plot(xcoords, ycoords, color=color, label=functionLabel)
 
 def labelXaxis(string):
     plt.xlabel(string)
@@ -133,7 +133,7 @@ def xrange(xmin, xmax):
 def yrange(ymin, ymax):
    plt.ylim(ymin, ymax)
 
-def generate_array_then_graph(minimum_x=None, maximum_x=None, f=None, incrementsperunit=None, color=None, shw=None, showAxes=None, showXaxis=None, showYaxis=None, fitToscreen=None, givenYMIN=None, givenYMAX=None, givenXMIN=None, givenXMAX=None, ylabel=None, xlabel=None, title=None, supTitle=None, fxlabel=None, showLegend=None, ignoreAxesLabelling=None):  # reciprocal step can also be thought of as gradings between 0 and 1. So the gradings is 100 per unit if this is 100
+def generate_array_then_graph(minimum_x=None, maximum_x=None, f=None, incrementsperunit=None, color=None, shw=None, showAxes=None, showXaxis=None, showYaxis=None, fitToscreen=None, givenXMIN=None, givenXMAX=None, givenYMIN=None, givenYMAX=None, xlabel=None, ylabel=None, title=None, supTitle=None, functionLabel=None, showLegend=None, ignoreAxesLabelling=None):  # reciprocal step can also be thought of as gradings between 0 and 1. So the gradings is 100 per unit if this is 100
     max_y = -9999999999999999999999999999999999999999999999999999999999  # arbitrary small number, so that the first y value is always larger than this
     min_y = 9999999999999999999999999999999999999999999999999999999999  # arbitrary large number, so that the first y value is always smaller than this
     if str(type(minimum_x)) == "<class 'float'>":
@@ -209,7 +209,7 @@ def generate_array_then_graph(minimum_x=None, maximum_x=None, f=None, increments
 
 
     # then finally graph f(x) using values we generated, and send to graph() which only does plotting. Delegation to reduce repetitive lines
-    graph(coords_x, coords_y, color, shw, showAxes, showXaxis, showYaxis, fitToscreen, min_y, max_y, min_x, max_x, xlabel, ylabel, title, supTitle, fxlabel, showLegend, ignoreAxesLabelling) #showAxes, showXaxis, showYaxis and fitToscreen are delegated to graph
+    graph(coords_x, coords_y, color, shw, showAxes, showXaxis, showYaxis, fitToscreen, min_y, max_y, min_x, max_x, xlabel, ylabel, title, supTitle, functionLabel, showLegend, ignoreAxesLabelling) #showAxes, showXaxis, showYaxis and fitToscreen are delegated to graph
     #this way the code has less repetition (the calc would have to pass thru graph anyway so make graph do checks etc. for axes and fit)
     #no need to pass: ymin and ymax, they will be recalced anyway for accuracy and consistency in value (reliability)
 
