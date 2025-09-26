@@ -123,6 +123,28 @@ def formatLegend():
 def show():
     plt.show()
 
+def quickplot(xlist=None, ylist=None, color=None): #useful for quickly deducing patterns without excess parameters
+    #check params
+    if (xlist is None) and (ylist is None):
+        print("Both lists (x list and y list) are None")
+        xlist, ylist = [], []
+        for carrier in range(10):
+            xlist.append(carrier)
+            ylist.append(carrier)
+    if (xlist is None):
+        xlist = []
+        for carrier in range(len(ylist)):
+            xlist.append(carrier)
+    if ylist is None:
+        ylist = []
+        for carrier in range(len(xlist)):
+            ylist.append(carrier)
+    if color is None:
+        color = "red"
+
+    #finally, plot the data
+    plt.plot(xlist, ylist, color=color)
+
 # lims not needed; check in generate_array_then_graph for the lims. Lims are not needed because they're useless. Just generate values outside the range its calm
 def yrangeauto(ylist):
    plt.ylim(min(ylist), max(ylist))
