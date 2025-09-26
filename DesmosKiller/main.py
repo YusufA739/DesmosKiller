@@ -18,15 +18,23 @@ def graph(xlist=None, ylist=None, color=None, shw=None, showAxes=None, showXaxis
     if (xlist is None):
         xlist = []
         print("x list is None")
-        for carrier in range(len(ylist)):
+        for carrier in range(10):
             xlist.append(carrier)
     if (ylist is None):
         ylist = []
         print("y list is None")
-        for carrier in range(len(xlist)):
+        for carrier in range(10):
+            ylist.append(carrier)
+    if len(xlist) == 0:
+        print("xlist is empty")
+        for carrier in range(10):
+            xlist.append(carrier)
+    if len(ylist) == 0:
+        print("ylist is empty")
+        for carrier in range(10):
             ylist.append(carrier)
     if len(xlist) != len(ylist):
-        print("Error: No x and y values passed or imbalanced lists. Pass two equally-sized arrays for x and y")
+        print("Error: imbalanced lists. Pass two equally-sized arrays for x and y. Will pad out list (temporary fix)")
         if len(xlist) < len(ylist):#pad out the list
             for carrier in range(len(ylist)-len(xlist)):
                 xlist.append(10)
@@ -139,6 +147,22 @@ def quickplot(xlist=None, ylist=None, color=None): #useful for quickly deducing 
         ylist = []
         for carrier in range(len(xlist)):
             ylist.append(carrier)
+    if len(xlist) == 0:
+        print("xlist is empty")
+        for carrier in range(10):
+            xlist.append(carrier)
+    if len(ylist) == 0:
+        print("ylist is empty")
+        for carrier in range(10):
+            ylist.append(carrier)
+    if len(xlist) != len(ylist):
+        print("Imbalanced lists: fixing...")
+        if len(xlist) < len(ylist):
+            for carrier in range(len(ylist)-len(xlist)):
+                xlist.append(carrier)
+        else:
+            for carrier in range(len(xlist)-len(ylist)):
+                ylist.append(carrier)
     if color is None:
         color = "red"
 
