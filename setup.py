@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(name="DesmosKiller",
-      version="9.0",
+      version="10.0",
       packages=["DesmosKiller"],
       install_requires=["matplotlib"],
       author="YusufA442",
