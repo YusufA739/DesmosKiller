@@ -110,7 +110,7 @@ def graph(xlist=None, ylist=None, color=None, shw=None, showAxes=None, showXaxis
     if shw:
         show()
 
-def plotData(xcoords, ycoords, color, functionLabel):
+def plotData(xcoords, ycoords, color="red", functionLabel="Unnamed Function"):#default names are better than None imo
     plt.plot(xcoords, ycoords, color=color, label=functionLabel)
 
 def labelXaxis(string):
@@ -130,6 +130,12 @@ def formatLegend():
 
 def show():
     plt.show()
+
+def scatter(x, y):
+    plt.scatter(x, y)
+
+def pause(time=0):
+    plt.pause(time)
 
 def quickplot(xlist=None, ylist=None, color=None): #useful for quickly deducing patterns without excess parameters
     #check params
