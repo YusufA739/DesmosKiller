@@ -1,4 +1,4 @@
-from main import *
+from DesmosKiller.DesmosKiller import *
 import math
 from math import *
 #how to use:

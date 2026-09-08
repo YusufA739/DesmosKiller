@@ -1,5 +1,5 @@
 import random,time
-from DesmosKiller import main
+from DesmosKiller.DesmosKiller import *
 
 ktime = 0
 itime = 0
@@ -46,8 +46,8 @@ for arrLen in range(0,domainMax+1,1):
 
 
 
-main.graph(None,kVals,"blue",functionLabel="Quicksort") #only need to show axes for one of them
+graph(None,kVals,"blue",functionLabel="Quicksort") #only need to show axes for one of them
 # They share the same graph
-main.graph(None,iVals,"green",xlabel="time(μs)",ylabel="List Size(n)",titlelabel="Time Complexity of Quicksort vs Insertion Sort",functionLabel="Insertion Sort", shw=True)
+graph(None,iVals,"green",xlabel="time(μs)",ylabel="List Size(n)",titlelabel="Time Complexity of Quicksort vs Insertion Sort",functionLabel="Insertion Sort", shw=True)
 
-main.show()
+show()
