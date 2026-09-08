@@ -1,5 +1,6 @@
 # next lib
-#Note: if overrides are smaller than the min or max within the list, they will be ignored. They only work for making the graph larger, so min override must be smaller than the min in list and same for max
+#Note: if overrides are larger than the min or smaller than max within the list, they will be ignored.
+#They only work for making the graph smaller or zoomed out, so min override must be smaller than the min in list and larger than max for max
 import matplotlib.pyplot as plt
 import numpy as np
 

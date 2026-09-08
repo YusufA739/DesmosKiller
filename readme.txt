@@ -1,3 +1,7 @@
-Simple Matplotlib wrapper to speed up graphing locally or runtime generated data.
+Simple Matplotlib wrapper to speed up graph generation. Can also generate data at runtime, if given a Cartesian Function.
 
-New feature summary: added quickplot() to library
+Future updates will add a Parametric Function processor for more runtime generation of data.
+
+key update feature summary: added quickplot() to library
+
+new features: minor changes to comments etc.
