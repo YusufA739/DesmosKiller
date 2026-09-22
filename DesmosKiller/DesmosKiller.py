@@ -111,7 +111,7 @@ def graph(xlist=None, ylist=None, color=None, shw=None, showAxes=None, showXaxis
     if shw:
         show()
 
-def plotData(xcoords, ycoords, color="red", functionLabel="Unnamed Function"):#default names are better than None imo
+def plotData(xcoords, ycoords, color="red", functionLabel="Unnamed Function y=f(x)"):#default names are better than None imo
     plt.plot(xcoords, ycoords, color=color, label=functionLabel)
 
 def labelXaxis(string):
@@ -132,11 +132,14 @@ def formatLegend():
 def show():
     plt.show()
 
-def scatter(x, y):
-    plt.scatter(x, y)
+def scatter(x, y, color="orange", label="Unnamed Scatter"):
+    plt.scatter(x, y, color=color, label=label)
 
 def pause(time=0):
     plt.pause(time)
+
+def grid(show=True):
+    plt.grid(show)
 
 def quickplot(xlist=None, ylist=None, color=None): #useful for quickly deducing patterns without excess parameters
     #check params
@@ -300,19 +303,19 @@ def polynomialcobf(x, y, degree):
     y_smooth = poly_func(x_smooth)
 
     #plot original data points
-    plt.scatter(x, y, color='orange', label='Data points')
+    scatter(x, y, color='orange', label='Scatter Plot')
 
     #plot polynomial fit
-    plt.plot(x_smooth, y_smooth, color='red',
-             label=f'Polynomial degree {degree}')
+    graph(xcoords=x_smooth,ycoords=y_smooth, color='yellow',
+             functionLabel=f'Polynomial degree {degree}')
 
     #labels and legend
-    plt.xlabel('X')
-    plt.ylabel('Y')
-    plt.title(f'Polynomial Fit (degree {degree})')
-    plt.legend()
-    plt.grid(True)
-    plt.show()
+    # plt.xlabel('X')
+    # plt.ylabel('Y')
+    # plt.title(f'Polynomial Fit (degree {degree})')
+    # plt.legend()
+    # plt.grid(True)
+    # plt.show()
 
 def generate_array_then_parametric_graph():
     print("Behind the scenes... NOT FINISHED CRTL+C THIS RN")
