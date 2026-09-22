@@ -274,6 +274,46 @@ def x_axis(minimum_x, maximum_x):  # needed for x-axis, do not change
 def y_axis(minimum_y, maximum_y):  # needed for y-axis, do not change
     graph([0, 0], [minimum_y, maximum_y], "black", False, ignoreAxesLabelling=True)  # do not change this, either. Gives x=0 to draw the y axis
 
+def polynomialcobf(x, y, degree):
+
+    try:
+        x = np.array(x, dtype=float)
+        y = np.array(y, dtype=float)
+    except ValueError:
+        raise ValueError("x and y must be numeric sequences.")
+
+    if x.shape != y.shape:
+        raise ValueError("x and y must have the same length.")
+    if degree < 0:
+        raise ValueError("Degree must be a non-negative integer.")
+    if degree >= len(x):
+        raise ValueError("Degree must be less than number of data points.")
+
+    #fit polynomial coefficients
+    coeffs = np.polyfit(x, y, 1)
+
+    #create polynomial function from coefficients
+    poly_func = np.poly1d(coeffs)
+
+    # Generate smooth x values for plotting the curve
+    x_smooth = np.linspace(min(x), max(x), 500)
+    y_smooth = poly_func(x_smooth)
+
+    #plot original data points
+    plt.scatter(x, y, color='orange', label='Data points')
+
+    #plot polynomial fit
+    plt.plot(x_smooth, y_smooth, color='red',
+             label=f'Polynomial degree {degree}')
+
+    #labels and legend
+    plt.xlabel('X')
+    plt.ylabel('Y')
+    plt.title(f'Polynomial Fit (degree {degree})')
+    plt.legend()
+    plt.grid(True)
+    plt.show()
+
 def generate_array_then_parametric_graph():
     print("Behind the scenes... NOT FINISHED CRTL+C THIS RN")
     #copy code for generate, then just add z axis, and logically rotate by 90 clockwise, y going up, x going into and out, positive is out, and z is now x
