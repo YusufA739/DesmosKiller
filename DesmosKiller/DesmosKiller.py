@@ -277,7 +277,7 @@ def x_axis(minimum_x, maximum_x):  # needed for x-axis, do not change
 def y_axis(minimum_y, maximum_y):  # needed for y-axis, do not change
     graph([0, 0], [minimum_y, maximum_y], "black", False, ignoreAxesLabelling=True)  # do not change this, either. Gives x=0 to draw the y axis
 
-def polynomialcobf(x, y, degree, givenNumberOfIntervals=500, givenXMIN=None, givenXMAX=None, color="yellow", functionLabel=None):
+def polynomialcobf(x, y, degree=1, givenNumberOfIntervals=500, givenXMIN=None, givenXMAX=None, color="yellow", functionLabel=None):
     if functionLabel is None:
         functionLabel = f'Polynomial degree {degree}'
     if givenXMIN is None:
