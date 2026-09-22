@@ -306,7 +306,7 @@ def polynomialcobf(x, y, degree):
     scatter(x, y, color='orange', label='Scatter Plot')
 
     #plot polynomial fit
-    graph(xcoords=x_smooth,ycoords=y_smooth, color='yellow',
+    graph(xlist=x_smooth,ylist=y_smooth, color='yellow',
              functionLabel=f'Polynomial degree {degree}')
 
     #labels and legend
