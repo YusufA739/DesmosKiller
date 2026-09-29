@@ -33,6 +33,14 @@ def g(x=None):
 generate_array_then_graph(-100000,100000,f,1,"black",True) # defining x axis
 generate_array_then_graph(-1000,1000,g,1000,"blue",False)
 #graph.generate_array_then_graph(-1000,1000,f,100,"green",True)
+defaultCreateSubplot(2,2,1)
 
+fig, sgrid = newSubplotGrid(2,2)
+sgrid[0,0].plot(list1,list2)
+fig,sgrid = addToSubplotGrid(fig, sgrid,0, 1,[0,1,2,3,4,5],[0,1,2,3],"test")
+fig,sgrid = addToSubplotGrid(fig, sgrid,1, 0,[5,5,5,4],[0,1,2,3,3,3,3],"test")
+fig,sgrid = addToSubplotGrid(fig, sgrid,1, 1, list1,list1,"test")
+tight_layout()
+show()
 
 #graph.graph(list2,list1,"black",True)#use this if you already have an array of values for x and y (equal length) to graph

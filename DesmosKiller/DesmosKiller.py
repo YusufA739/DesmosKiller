@@ -141,6 +141,87 @@ def pause(time=0):
 def grid(show=True):
     plt.grid(show)
 
+def newSubplotGrid(rows, columns):
+    fig, axes = plt.subplots(rows, columns)
+    return fig, axes
+
+#no err handling yet
+def addToSubplotGrid(fig, axes, rowIndex, columnIndex, xlist=None, ylist=None, title=None):
+    # return fig.add_subplot(axes, subplot_num)
+    # #need to figure out some error handling for this one below
+    # padding out lists and list data checks
+    if (xlist is None) and (ylist is None):
+        print("Both lists (x list and y list) are None")
+        xlist, ylist = [], []
+        for carrier in range(100):
+            xlist.append(carrier)
+            ylist.append(carrier)
+    if (xlist is None):
+        xlist = []
+        print("x list is None")
+        for carrier in range(10):
+            xlist.append(carrier)
+    if (ylist is None):
+        ylist = []
+        print("y list is None")
+        for carrier in range(10):
+            ylist.append(carrier)
+    if len(xlist) == 0:
+        print("xlist is empty")
+        for carrier in range(10):
+            xlist.append(carrier)
+    if len(ylist) == 0:
+        print("ylist is empty")
+        for carrier in range(10):
+            ylist.append(carrier)
+    if len(xlist) != len(ylist):
+        print("Error: imbalanced lists. Pass two equally-sized arrays for x and y. Will pad out list (temporary fix)")
+        if len(xlist) < len(ylist):  # pad out the list
+            for carrier in range(len(ylist) - len(xlist)):
+                xlist.append(10)
+        else:
+            for carrier in range(len(xlist) - len(ylist)):
+                ylist.append(20)
+    # end of padding (now we can calc the mins and maxes and save(cache is the wrong word) the values in a variable (so in RAM))
+    axes[rowIndex, columnIndex].plot(xlist, ylist)
+    if title is not None:
+        setTitleSubplotGrid(fig, axes, rowIndex, columnIndex, title)
+    return fig, axes
+
+def setTitleSubplotGrid(fig, axes, rowIndex, columnIndex, title=None):
+    axes[rowIndex, columnIndex].set_title(title)
+    return fig, axes
+
+def defaultCreateSubplot(x, y, subplot_num=1):
+    # return plt.subplot(x, y, subplot_num)
+    # quick copy paste snippet of usage
+    # Create a 2x2 grid of subplots
+    fig, axes = plt.subplots(2, 2) #returnSubplotGrid()
+
+    # Plot data on each subplot
+    x = np.linspace(0, 10, 100) #just generating some points, so 1 to 10, with 100 points spaced equidistant from
+    # each other
+
+    # addToSubplotGrid()
+    axes[0, 0].plot(x, np.sin(x))
+    axes[0, 0].set_title("Sine Wave")
+
+    axes[0, 1].plot(x, np.cos(x))
+    axes[0, 1].set_title("Cosine Wave")
+
+    axes[1, 0].plot(x, np.tan(x))
+    axes[1, 0].set_title("Tangent Wave")
+
+    axes[1, 1].plot(x, np.exp(-x))
+    axes[1, 1].set_title("Exponential Decay")
+
+    # Adjust layout and display
+    plt.tight_layout()
+    plt.show()
+
+def tight_layout():
+    plt.tight_layout()
+
 def quickplot(xlist=None, ylist=None, color=None): #useful for quickly deducing patterns without excess parameters
     #check params
     if (xlist is None) and (ylist is None):
