@@ -1,4 +1,4 @@
-import DesmosKiller.main as main
+import DesmosKiller as main
 def func(x):
     return (2*(x**2)) + (5*x) + 5
 
