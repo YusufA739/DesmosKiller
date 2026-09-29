@@ -2,6 +2,6 @@ Simple Matplotlib wrapper to speed up graph generation. Can also generate data a
 
 Future updates will add a Parametric Function processor for more runtime generation of data.
 
-key update feature summary: added quickplot() to library
+key update feature summary: check github for more information
 
-new features: minor changes to comments etc.
+github: https://github.com/yusufa739/DesmosKiller
