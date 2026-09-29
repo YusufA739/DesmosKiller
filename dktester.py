@@ -37,9 +37,9 @@ defaultCreateSubplot(2,2,1)
 
 fig, sgrid = newSubplotGrid(2,2)
 sgrid[0,0].plot(list1,list2)
-fig,sgrid = addToSubplotGrid(fig, sgrid,0, 1,[0,1,2,3,4,5],[0,1,2,3],"test")
-fig,sgrid = addToSubplotGrid(fig, sgrid,1, 0,[5,5,5,4],[0,1,2,3,3,3,3],"test")
-fig,sgrid = addToSubplotGrid(fig, sgrid,1, 1, list1,list1,"test")
+fig,sgrid = addToSubplotGrid(fig, sgrid,0, 1,[0,1,2,3,4,5],[0,1,2,3],"hoahao")
+fig,sgrid = addToSubplotGrid(fig, sgrid,1, 0,[5,5,5,4],[0,1,2,3,3,3,3],"tesligvbiut")
+fig,sgrid = addToSubplotGrid(fig, sgrid,1, 1, list1,list1,"knoi")
 tight_layout()
 show()
 
