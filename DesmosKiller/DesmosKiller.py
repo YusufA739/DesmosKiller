@@ -4,8 +4,8 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-import sklearn
-from sklearn.linear_model import LinearRegression as lr 
+# import sklearn
+# from sklearn.linear_model import LinearRegression as lr 
 
 
 def graph(xlist=None, ylist=None, color=None, shw=None, showAxes=None, showXaxis=None, showYaxis=None, fitToscreen=None, givenXMIN=None, givenXMAX=None, givenYMIN=None, givenYMAX=None, xlabel=None, ylabel=None, titlelabel=None, superTitlelabel=None, functionLabel=None, showLegend=None, ignoreAxesLabelling=None, skLinearRegression = None): #this doesn't need a parametric version as it supports custom x and y values
@@ -112,8 +112,8 @@ def graph(xlist=None, ylist=None, color=None, shw=None, showAxes=None, showXaxis
 
 
 
-    if skLinearRegression == True:
-        pass
+    # if skLinearRegression == True:
+    #     pass
 
 
     #last line, should be anyway afaik maybe, maybe not. But I think you can't edit a plot after showing, or it's bad practice imo anyway
@@ -414,9 +414,9 @@ def polynomialcobf(x, y, degree=1, givenNumberOfIntervals=500, givenXMIN=None, g
     # plt.show()
 
 
-def linear_regression_via_sklearn(x ,y):
-    model = lr(fit_intercept=True)
-    model.fit(x,y)
+# def linear_regression_via_sklearn(x ,y):
+#     model = lr(fit_intercept=True)
+#     model.fit(x,y)
     
 
 
